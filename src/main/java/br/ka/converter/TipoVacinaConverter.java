@@ -8,8 +8,8 @@ import jakarta.persistence.Converter;
 public class TipoVacinaConverter implements AttributeConverter<TipoVacina, Integer> {
 
     @Override
-    public Integer convertToDatabaseColumn(TipoVacina vacina) {
-        return vacina == null ? null : vacina.getId();
+    public Integer convertToDatabaseColumn(TipoVacina tipoVacina) {
+        return tipoVacina == null ? null : tipoVacina.getId();
     }
 
     @Override
