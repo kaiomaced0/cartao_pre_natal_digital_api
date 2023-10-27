@@ -1,32 +1,23 @@
 package br.ka.model;
 
-public enum Vacina {
-    VACINACAO_DT(1, "Vacinação DT"),
-    HEPATITE_B(2, "Hepatite B");
+import jakarta.persistence.Entity;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 
-    private final int id;
-    private final String label;
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Vacina extends EntityClass {
 
-    Vacina(int id, String label) {
-        this.id = id;
-        this.label = label;
-    }
+    private String nome;
 
-    public int getId() {
-        return id;
-    }
+    private Double quantidadeDoses;
 
-    public String getLabel() {
-        return label;
-    }
+    private Double doseAtual;
 
-    public static Vacina valueOf(Integer id) throws IllegalArgumentException {
-        if (id == null)
-            return null;
-        for (Vacina vacina : Vacina.values()) {
-            if (id.equals(vacina.getId()))
-                return vacina;
-        }
-        throw new IllegalArgumentException("Id inválido:" + id);
-    }
+    private String nomeProfissionalRealizouVacina;
+
+    private String localVacinaRealizada;
+
+    private String loteVacina;
+    
 }

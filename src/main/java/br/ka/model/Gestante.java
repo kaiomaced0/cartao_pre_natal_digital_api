@@ -1,4 +1,5 @@
 package br.ka.model;
+
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
@@ -24,13 +25,6 @@ public class Gestante extends EntityClass {
 
     @Column(name = "vacina_dtpa")
     private Boolean vacinaDTPA;
-
-
-    @OneToMany
-    @JoinColumn(name = "gestante_id")
-    private List<Vacina> vacinas;
-
-
 
     @Column(name = "h1n1")
     private Boolean h1n1;
@@ -157,31 +151,5 @@ public class Gestante extends EntityClass {
     public void setTipoSanguineo(String tipoSanguineo) {
         this.tipoSanguineo = tipoSanguineo;
     }
-    public List<Vacina> getVacinas() {
-        return vacinas;
-    }
 
-    public void setVacinas(List<Vacina> vacinas) {
-        this.vacinas = vacinas;
-    }
-
-    @Override
-    public String toString() {
-        return "Gestante{" +
-                "cpf='" + cpf + '\'' +
-                ", nome='" + nome + '\'' +
-                ", dataNascimento=" + dataNascimento +
-                ", naturalidade='" + naturalidade + '\'' +
-                ", convenio='" + convenio + '\'' +
-                ", vacinaDTPA=" + vacinaDTPA +
-                ", vacinas=" + vacinas +
-                ", h1n1=" + h1n1 +
-                ", contatosEmergencia=" + contatosEmergencia +
-                ", gestacao=" + gestacao +
-                ", parto=" + parto +
-                ", aborto=" + aborto +
-                ", ect=" + ect +
-                ", tipoSanguineo='" + tipoSanguineo + '\'' +
-                '}';
-    }
 }
