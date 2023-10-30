@@ -1,7 +1,6 @@
 package br.ka.model;
 
 import jakarta.persistence.*;
-import java.util.List;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
