@@ -16,5 +16,35 @@ public class Consulta extends EntityClass {
 
     private String observacao;
 
-    
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public TipoConsulta getTipoConsulta() {
+        return tipoConsulta;
+    }
+
+    public void setTipoConsulta(TipoConsulta tipoConsulta) {
+        this.tipoConsulta = tipoConsulta;
+    }
+
+    public Medico getMedico() {
+        return medico;
+    }
+
+    public void setMedico(Medico medico) {
+        this.medico = medico;
+    }
+
+    public String getObservacao() {
+        return observacao;
+    }
+
+    public void setObservacao(String observacao) {
+        this.observacao = observacao;
+    }
 }

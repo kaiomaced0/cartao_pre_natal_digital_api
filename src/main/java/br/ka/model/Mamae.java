@@ -22,4 +22,6 @@ public class Mamae extends Usuario {
 
     private List<String> contatoEmergencia;
 
+    private Gestacao gestacao;
+
 }
