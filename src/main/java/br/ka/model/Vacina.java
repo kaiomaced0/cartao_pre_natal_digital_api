@@ -19,5 +19,52 @@ public class Vacina extends EntityClass {
     private String localVacinaRealizada;
 
     private String loteVacina;
-    
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public Double getQuantidadeDoses() {
+        return quantidadeDoses;
+    }
+
+    public void setQuantidadeDoses(Double quantidadeDoses) {
+        this.quantidadeDoses = quantidadeDoses;
+    }
+
+    public Double getDoseAtual() {
+        return doseAtual;
+    }
+
+    public void setDoseAtual(Double doseAtual) {
+        this.doseAtual = doseAtual;
+    }
+
+    public String getNomeProfissionalRealizouVacina() {
+        return nomeProfissionalRealizouVacina;
+    }
+
+    public void setNomeProfissionalRealizouVacina(String nomeProfissionalRealizouVacina) {
+        this.nomeProfissionalRealizouVacina = nomeProfissionalRealizouVacina;
+    }
+
+    public String getLocalVacinaRealizada() {
+        return localVacinaRealizada;
+    }
+
+    public void setLocalVacinaRealizada(String localVacinaRealizada) {
+        this.localVacinaRealizada = localVacinaRealizada;
+    }
+
+    public String getLoteVacina() {
+        return loteVacina;
+    }
+
+    public void setLoteVacina(String loteVacina) {
+        this.loteVacina = loteVacina;
+    }
 }

@@ -19,17 +19,12 @@ public abstract class BaseService<T, ID, R extends BaseRepository<T, ID>> {
 
     public T findById(ID id) {
         return repository
-                .findByIdOptional(id)
-                .orElseThrow(() -> new NotFoundException("Resource not found by id"));
+                .findById(id);
     }
-
-    public Optional<T> findByIdOptional(ID id) {
-        return repository.findByIdOptional(id);
-    }
-
     @Transactional
     public T create(T entity) {
-        repository.persist(entity);
+        T t = entity;
+        repository.persist(t);
         return entity;
     }
 
@@ -40,7 +35,6 @@ public abstract class BaseService<T, ID, R extends BaseRepository<T, ID>> {
 
     @Transactional
     public void deleteById(ID id) {
-        findById(id);
         repository.deleteById(id);
     }
 }

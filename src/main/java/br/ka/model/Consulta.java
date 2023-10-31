@@ -1,17 +1,20 @@
 package br.ka.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
+import jakarta.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Consulta extends EntityClass {
 
+    @ManyToOne
+    @JoinColumn(name = "usuario_consulta")
     private Usuario usuario;
 
+    @Enumerated(EnumType.STRING)
     private TipoConsulta tipoConsulta;
 
+    @JoinColumn(name = "medico_consulta")
+    @ManyToOne
     private Medico medico;
 
     private String observacao;
