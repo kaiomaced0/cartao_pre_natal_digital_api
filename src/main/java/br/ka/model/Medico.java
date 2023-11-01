@@ -9,6 +9,7 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Medico extends Usuario {
 
+    @OneToMany
     @Column(name = "lista_especializacao_medico")
     private List<Especializacao> especializacoes;
 

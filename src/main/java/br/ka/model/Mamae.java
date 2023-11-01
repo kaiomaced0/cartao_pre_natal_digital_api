@@ -24,7 +24,9 @@ public class Mamae extends Usuario {
 
     private String convenio;
 
-
+    @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "contatos_emergencia", joinColumns = @JoinColumn(name = "mamae_id"))
+    @Column(name = "contato", nullable = false)
     private List<String> contatoEmergencia;
 
     @OneToOne

@@ -8,7 +8,7 @@ public class Gestacao extends EntityClass {
 
     private String nomeBebe;
 
-    @OneToOne()
+    @OneToOne
     @PrimaryKeyJoinColumn
     private Vacina vacinaDTPa;
 
