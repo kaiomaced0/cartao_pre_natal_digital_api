@@ -2,6 +2,7 @@ package br.ka.resource;
 
 import br.ka.dto.AcompanhamentoDTO;
 import br.ka.model.Acompanhamento;
+import br.ka.model.EntityClass;
 import br.ka.service.AcompanhamentoService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -15,11 +16,11 @@ import java.util.stream.Collectors;
 @Path("/acompanhamento")
 public class AcompanhamentoResource {
     @Inject
-    private AcompanhamentoService service;
+    AcompanhamentoService service;
 
     @GET
     public List<Acompanhamento> getAll(){
-        return service.findAll().stream().filter(a -> a.getAtivo() == true).collect(Collectors.toList());
+        return service.findAll().stream().filter(EntityClass::getAtivo).collect(Collectors.toList());
     }
     @GET
     @Path("/{id}")

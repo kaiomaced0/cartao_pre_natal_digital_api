@@ -1,12 +1,17 @@
 package br.ka.resource;
 
+import br.ka.dto.MamaeResponseDTO;
+import br.ka.dto.UsuarioDTO;
 import br.ka.model.Mamae;
 import br.ka.service.MamaeService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Path("/mamae")
@@ -16,18 +21,18 @@ public class MamaeResource {
 
 
     @GET
-    public List<Mamae> getAll(){
-        return service.findAll();
+    public List<MamaeResponseDTO> getAll(){
+        return service.findAll().stream().map(mamae -> new MamaeResponseDTO(mamae)).collect(Collectors.toList());
     }
     @GET
     @Path("/{id}")
-    public Mamae getById(@PathParam("id") Long id) {
-        return service.findById(id);
+    public MamaeResponseDTO getById(@PathParam("id") Long id) {
+        return new MamaeResponseDTO(service.findById(id));
     }
 
     @POST
-    public Mamae create(Mamae entity) {
-        return service.create(entity);
+    public Response create(UsuarioDTO usuarioDTO) {
+        return service.insert(usuarioDTO);
     }
 
     @PUT

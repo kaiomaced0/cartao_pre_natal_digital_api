@@ -1,8 +1,6 @@
 package br.ka.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
+import jakarta.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -19,6 +17,17 @@ public class Vacina extends EntityClass {
     private String localVacinaRealizada;
 
     private String loteVacina;
+
+    @Enumerated(EnumType.STRING)
+    private TipoVacina tipoVacina;
+
+    public TipoVacina getTipoVacina() {
+        return tipoVacina;
+    }
+
+    public void setTipoVacina(TipoVacina tipoVacina) {
+        this.tipoVacina = tipoVacina;
+    }
 
     public String getNome() {
         return nome;

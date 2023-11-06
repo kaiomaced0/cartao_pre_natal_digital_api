@@ -1,12 +1,17 @@
 package br.ka.resource;
 
+import br.ka.dto.ExameDTO;
+import br.ka.dto.ExameResponseDTO;
 import br.ka.model.Exame;
 import br.ka.service.ExameService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Path("/exame")
@@ -16,18 +21,18 @@ public class ExameResource {
 
 
     @GET
-    public List<Exame> getAll(){
-        return service.findAll();
+    public List<ExameResponseDTO> getAll(){
+        return service.findAll().stream().map(ExameResponseDTO::new).collect(Collectors.toList());
     }
     @GET
     @Path("/{id}")
-    public Exame getById(@PathParam("id") Long id) {
-        return service.findById(id);
+    public ExameResponseDTO getById(@PathParam("id") Long id) {
+        return new ExameResponseDTO(service.findById(id));
     }
 
     @POST
-    public Exame create(Exame entity) {
-        return service.create(entity);
+    public Response create(ExameDTO entity) {
+        return service.insert(entity);
     }
 
     @PUT

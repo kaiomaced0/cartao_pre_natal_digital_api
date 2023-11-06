@@ -25,10 +25,10 @@ public class GestacaoResource {
         return service.findById(id);
     }
 
-    @POST
-    public Gestacao create(Gestacao entity) {
-        return service.create(entity);
-    }
+//    @POST
+//    public Gestacao create(Gestacao entity) {
+//        return service.create(entity);
+//    }
 
     @PUT
     @Path("/{id}")

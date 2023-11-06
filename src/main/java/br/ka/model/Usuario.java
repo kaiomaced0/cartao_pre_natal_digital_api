@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -12,8 +13,6 @@ public class Usuario extends EntityClass {
     private String nome;
 
     private String email;
-
-    private String login;
 
     private String senha;
 
@@ -24,6 +23,17 @@ public class Usuario extends EntityClass {
     private String telefone;
 
     private String naturalidade;
+
+    private Set<Perfil> perfis;
+
+
+    public Set<Perfil> getPerfis() {
+        return perfis;
+    }
+
+    public void setPerfis(Set<Perfil> perfis) {
+        this.perfis = perfis;
+    }
 
     public String getNome() {
         return nome;
@@ -39,14 +49,6 @@ public class Usuario extends EntityClass {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
     }
 
     public String getSenha() {

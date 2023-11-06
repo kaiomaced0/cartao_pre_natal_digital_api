@@ -30,6 +30,7 @@ public class Mamae extends Usuario {
     private List<String> contatoEmergencia;
 
     @OneToOne
+    @JoinColumn(name = "gestacao_mamae")
     private Gestacao gestacao;
 
     public Boolean getEmGestacao() {

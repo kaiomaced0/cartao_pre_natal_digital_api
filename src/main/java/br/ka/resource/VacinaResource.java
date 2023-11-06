@@ -1,12 +1,17 @@
 package br.ka.resource;
 
+import br.ka.dto.VacinaDTO;
+import br.ka.dto.VacinaResponseDTO;
 import br.ka.model.Vacina;
 import br.ka.service.VacinaService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Path("/vacina")
@@ -16,18 +21,18 @@ public class VacinaResource {
 
 
     @GET
-    public List<Vacina> getAll(){
-        return service.findAll();
+    public List<VacinaResponseDTO> getAll(){
+        return service.findAll().stream().map(VacinaResponseDTO::new).collect(Collectors.toList());
     }
     @GET
     @Path("/{id}")
-    public Vacina getById(@PathParam("id") Long id) {
-        return service.findById(id);
+    public VacinaResponseDTO getById(@PathParam("id") Long id) {
+        return new VacinaResponseDTO(service.findById(id));
     }
 
     @POST
-    public Vacina create(Vacina entity) {
-        return service.create(entity);
+    public Response insert(VacinaDTO entity) {
+        return service.insert(entity);
     }
 
     @PUT
