@@ -1,8 +1,10 @@
 package br.ka.repository;
 
+import br.ka.model.Acompanhamento;
 import br.ka.model.Consulta;
+import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
-public class ConsultaRepository extends BaseRepository<Consulta, Long> {
+public class ConsultaRepository implements PanacheRepository<Consulta> {
 }

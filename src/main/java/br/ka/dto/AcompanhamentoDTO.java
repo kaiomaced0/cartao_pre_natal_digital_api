@@ -3,6 +3,7 @@ package br.ka.dto;
 import br.ka.model.Acompanhamento;
 
 public record AcompanhamentoDTO(
+        Long idMamae,
         String observacao,
         String dados,
         Double peso

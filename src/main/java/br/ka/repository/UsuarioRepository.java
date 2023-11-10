@@ -1,12 +1,14 @@
 package br.ka.repository;
 
+import br.ka.model.Acompanhamento;
 import br.ka.model.Usuario;
+import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 
 import java.util.List;
 
 @ApplicationScoped
-public class UsuarioRepository extends BaseRepository<Usuario, Long> {
+public class UsuarioRepository implements PanacheRepository<Usuario> {
 
     public List<Usuario> findByNome(String nome){
         if (nome == null)
@@ -19,6 +21,13 @@ public class UsuarioRepository extends BaseRepository<Usuario, Long> {
             return null;
 
         return find("email = ?1 AND senha = ?2 ", email, senha).firstResult();
+    }
+
+    public Usuario findByCpfAndSenha(String cpf, String senha){
+        if (cpf == null || senha == null)
+            return null;
+
+        return find("cpf = ?1 AND senha = ?2 ", cpf, senha).firstResult();
     }
 
     public Usuario findByCpf(String cpf){

@@ -3,6 +3,7 @@ package br.ka.dto;
 import br.ka.model.Exame;
 
 public record ExameDTO(
+        Long idMamae,
         String tipoExame,
         String localExameRealizado,
         String observacao

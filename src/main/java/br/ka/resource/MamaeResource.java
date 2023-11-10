@@ -1,6 +1,7 @@
 package br.ka.resource;
 
 import br.ka.dto.MamaeResponseDTO;
+import br.ka.dto.MudarSenhaDTO;
 import br.ka.dto.UsuarioDTO;
 import br.ka.model.Mamae;
 import br.ka.service.MamaeService;
@@ -27,13 +28,28 @@ public class MamaeResource {
     @GET
     @Path("/{id}")
     public MamaeResponseDTO getById(@PathParam("id") Long id) {
+
         return new MamaeResponseDTO(service.findById(id));
     }
 
     @POST
     public Response create(UsuarioDTO usuarioDTO) {
+
         return service.insert(usuarioDTO);
     }
+
+    @PATCH
+    @Path("/mudarsenha")
+    public Response mudarSenha(MudarSenhaDTO mudarSenhaDTO){
+        return service.mudarSenha(mudarSenhaDTO);
+    }
+
+    @PATCH
+    @Path("/convenio")
+    public Response setConvenio(String convenio){
+        return service.setConvenio(convenio);
+    }
+
 
     @PUT
     @Path("/{id}")
@@ -44,6 +60,6 @@ public class MamaeResource {
     @PATCH
     @Path("/delete/{id}")
     public void delete(@PathParam("id") Long id) {
-        service.findById(id).setAtivo(false);
+        service.deleteById(id);
     }
 }

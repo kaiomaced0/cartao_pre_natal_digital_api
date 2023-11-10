@@ -2,11 +2,17 @@ package br.ka.model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Gestacao extends EntityClass {
 
     private String nomeBebe;
+
+    private String idadeGestacional;
+
+    private LocalDate dataInicio;
 
     @OneToOne
     @PrimaryKeyJoinColumn
@@ -15,6 +21,22 @@ public class Gestacao extends EntityClass {
     private Boolean realizado;
 
     private String observacaoFinal;
+
+    public String getIdadeGestacional() {
+        return idadeGestacional;
+    }
+
+    public void setIdadeGestacional(String idadeGestacional) {
+        this.idadeGestacional = idadeGestacional;
+    }
+
+    public LocalDate getDataInicio() {
+        return dataInicio;
+    }
+
+    public void setDataInicio(LocalDate dataInicio) {
+        this.dataInicio = dataInicio;
+    }
 
     public String getNomeBebe() {
         return nomeBebe;

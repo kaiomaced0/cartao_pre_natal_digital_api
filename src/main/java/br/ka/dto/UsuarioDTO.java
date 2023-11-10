@@ -9,18 +9,13 @@ public record UsuarioDTO(
         @NotBlank
         @Size(min = 3, max = 25)
         String cpf,
-        @NotBlank
-        @Size(min = 3, max = 1000)
-        String senha,
+        String nome,
         @NotBlank
         @Email
-        String email
+        String email,
+        @NotBlank
+        @Size(min = 3, max = 1000)
+        String senha
 ) {
-    public static Usuario criaUsuario(UsuarioDTO usuarioDTO){
-        Usuario user = new Usuario();
-        user.setCpf(usuarioDTO.cpf);
-        user.setEmail(usuarioDTO.email);
-        user.setSenha(usuarioDTO.senha);
-        return user;
-    }
+
 }

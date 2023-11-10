@@ -24,6 +24,9 @@ public class Usuario extends EntityClass {
 
     private String naturalidade;
 
+    @ElementCollection
+    @CollectionTable(name = "usuario_perfil", joinColumns = @JoinColumn(name = "id_usuario", referencedColumnName = "id"))
+    @Column(name = "perfil", length = 30)
     private Set<Perfil> perfis;
 
 

@@ -35,11 +35,11 @@ public class ExameResource {
         return service.insert(entity);
     }
 
-    @PUT
-    @Path("/{id}")
-    public Exame update(@PathParam("id") Long id, Exame entity) {
-        return service.update(entity);
-    }
+//    @PUT
+//    @Path("/{id}")
+//    public Exame update(@PathParam("id") Long id, Exame entity) {
+//        return service.update(entity);
+//    }
 
     @PATCH
     @Path("/delete/{id}")
