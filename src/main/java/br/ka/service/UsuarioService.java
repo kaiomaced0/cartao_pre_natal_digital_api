@@ -37,15 +37,20 @@ public class UsuarioService{
             Log.info("Requisição Usuario.insert()");
             Usuario usuario = new Usuario();
             usuario.setCpf(usuarioDTO.cpf());
-            usuario.setEmail(usuario.getEmail());
+            usuario.setNome(usuarioDTO.nome());
+            usuario.setEmail(usuarioDTO.email());
             usuario.setSenha(hash.getHashSenha(usuarioDTO.senha()));
             Set<Perfil> a = new HashSet<Perfil>();
             a.add(Perfil.USER);
             usuario.setPerfis(a);
-            repository.persist(usuario);
-            if(usuarioDTO.getClass() == null) {
+            Usuario teste = repository.findByCpf(usuarioDTO.cpf());
+            if(teste != null){
+                teste = repository.findByEmail(usuarioDTO.email());
+            }
+            if(usuarioDTO.getClass() == null || teste != null) {
                 throw new Exception("Usuario nulo");
             }
+            repository.persist(usuario);
             return Response.ok(usuario).build();
         } catch (Exception e) {
             Log.error("Erro ao rodar Requisição Usuario.insert()" + e.getMessage());

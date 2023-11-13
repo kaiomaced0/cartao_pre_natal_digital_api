@@ -1,10 +1,13 @@
 package br.ka.service;
 
+import br.ka.dto.MudarSenhaDTO;
 import br.ka.dto.UsuarioResponseDTO;
 import br.ka.model.Usuario;
 import br.ka.repository.UsuarioRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
+import jakarta.ws.rs.core.SecurityContext;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
 @ApplicationScoped
@@ -14,13 +17,28 @@ public class UsuarioLogadoService {
     JsonWebToken jsonWebToken;
 
     @Inject
-    UsuarioService usuarioService;
-
-    @Inject
     UsuarioRepository usuarioRepository;
-
+//    @Inject
+//    SecurityContext securityContext;
     @Inject
     HashService hash;
+
+    @Transactional
+    public UsuarioResponseDTO updateSenha(MudarSenhaDTO senha) {
+        try {
+
+            Usuario entity = usuarioRepository.findById(getPerfilUsuarioLogado().id());
+
+            if(hash.getHashSenha(senha.senhaAntiga()) != entity.getSenha())
+                throw new Exception("Senha anterior Incorreta");
+
+            entity.setSenha(hash.getHashSenha(senha.novaSenha()));
+            return new UsuarioResponseDTO(entity);
+        } catch (Exception e) {
+            return null;
+        }
+
+    }
 
     public UsuarioResponseDTO getPerfilUsuarioLogado() {
 

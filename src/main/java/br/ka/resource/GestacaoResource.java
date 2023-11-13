@@ -1,5 +1,7 @@
 package br.ka.resource;
 
+import br.ka.dto.GestacaoDTO;
+import br.ka.dto.GestacaoResponseDTO;
 import br.ka.model.EntityClass;
 import br.ka.model.Gestacao;
 import br.ka.service.GestacaoService;
@@ -19,17 +21,17 @@ public class GestacaoResource {
 
 
     @GET
-    public List<Gestacao> getAll(){
-        return service.findAll().stream().filter(EntityClass::getAtivo).collect(Collectors.toList());
+    public List<GestacaoResponseDTO> getAll(){
+        return service.findAll().stream().filter(EntityClass::getAtivo).map(GestacaoResponseDTO:: new).collect(Collectors.toList());
     }
     @GET
     @Path("/{id}")
-    public Gestacao getById(@PathParam("id") Long id) {
-        return service.findById(id);
+    public GestacaoResponseDTO getById(@PathParam("id") Long id) {
+        return new GestacaoResponseDTO(service.findById(id));
     }
 
     @POST
-    public Gestacao create(Gestacao entity) {
+    public GestacaoResponseDTO create(GestacaoDTO entity) {
         return service.create(entity);
     }
 

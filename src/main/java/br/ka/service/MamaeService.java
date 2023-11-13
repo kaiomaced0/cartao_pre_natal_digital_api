@@ -5,6 +5,7 @@ import br.ka.dto.MudarSenhaDTO;
 import br.ka.dto.UsuarioDTO;
 import br.ka.model.Gestacao;
 import br.ka.model.Mamae;
+import br.ka.model.Perfil;
 import br.ka.model.Usuario;
 import br.ka.repository.GestacaoRepository;
 import br.ka.repository.MamaeRepository;
@@ -14,7 +15,9 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.core.Response;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @ApplicationScoped
 public class MamaeService{
@@ -42,12 +45,14 @@ public class MamaeService{
         mamae.setCpf(usuarioDTO.cpf());
         mamae.setEmail(usuarioDTO.email());
         mamae.setSenha(hash.getHashSenha(usuarioDTO.senha()));
+        Set<Perfil> a = new HashSet<Perfil>();
+        a.add(Perfil.USER);
+        mamae.setPerfis(a);
         repository.persist(mamae);
         mamae.setEmGestacao(true);
         Gestacao gestacao = new Gestacao();
         gestacaoRepository.persist(gestacao);
         mamae.setGestacao(gestacao);
-
 
         return Response.status(Response.Status.OK).build();
 
@@ -63,7 +68,7 @@ public class MamaeService{
                 return Response.status(Response.Status.NO_CONTENT).build();
             }
         }
-        u.setNome(hash.getHashSenha(mudarSenhaDTO.novaSenha()));
+        u.setSenha(hash.getHashSenha(mudarSenhaDTO.novaSenha()));
         return Response.status(Response.Status.OK).build();
     }
 

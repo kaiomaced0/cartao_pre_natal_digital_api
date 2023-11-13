@@ -36,4 +36,10 @@ public class UsuarioRepository implements PanacheRepository<Usuario> {
 
         return find("cpf = ?1", cpf).firstResult();
     }
+    public Usuario findByEmail(String email){
+        if (email == null)
+            return null;
+
+        return find("email = ?1", email).firstResult();
+    }
 }

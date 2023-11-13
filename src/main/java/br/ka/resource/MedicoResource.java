@@ -1,5 +1,7 @@
 package br.ka.resource;
 
+import br.ka.dto.MedicoDTO;
+import br.ka.dto.MedicoResponseDTO;
 import br.ka.model.EntityClass;
 import br.ka.model.Medico;
 import br.ka.service.MedicoService;
@@ -19,17 +21,17 @@ public class MedicoResource {
 
 
     @GET
-    public List<Medico> getAll(){
-        return service.findAll().stream().filter(EntityClass::getAtivo).collect(Collectors.toList());
+    public List<MedicoResponseDTO> getAll(){
+        return service.findAll().stream().filter(EntityClass::getAtivo).map(MedicoResponseDTO::new).collect(Collectors.toList());
     }
     @GET
     @Path("/{id}")
-    public Medico getById(@PathParam("id") Long id) {
-        return service.findById(id);
+    public MedicoResponseDTO getById(@PathParam("id") Long id) {
+        return new MedicoResponseDTO(service.findById(id));
     }
 
     @POST
-    public Medico create(Medico entity) {
+    public MedicoResponseDTO create(MedicoDTO entity) {
         return service.create(entity);
     }
 

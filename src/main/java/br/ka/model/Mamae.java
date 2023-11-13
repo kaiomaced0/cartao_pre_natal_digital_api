@@ -11,15 +11,15 @@ public class Mamae extends Usuario {
     private Boolean emGestacao;
 
     @OneToMany
-    @JoinColumn(name = "lista_acompanhamento_mamae")
+    @JoinColumn(name = "acompanhamento_mamae")
     private List<Acompanhamento> acompanhamentos;
 
     @OneToMany
-    @JoinColumn(name = "lista_exame_mamae")
+    @JoinColumn(name = "exame_mamae")
     private List<Exame> exames;
 
     @OneToMany
-    @JoinColumn(name = "lista_ultrassonografia_mamae")
+    @JoinColumn(name = "ultrassonografia_mamae")
     private List<Ultrassonografia> ultrassonografias;
 
     private String convenio;
