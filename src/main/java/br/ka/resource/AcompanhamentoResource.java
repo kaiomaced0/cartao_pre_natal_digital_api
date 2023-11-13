@@ -7,6 +7,7 @@ import br.ka.service.AcompanhamentoService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,7 +30,7 @@ public class AcompanhamentoResource {
     }
 
     @POST
-    public Acompanhamento create(AcompanhamentoDTO entity) {
+    public Response create(AcompanhamentoDTO entity) {
         return service.create(entity);
     }
 

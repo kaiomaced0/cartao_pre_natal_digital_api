@@ -1,5 +1,6 @@
 package br.ka.resource;
 
+import br.ka.model.EntityClass;
 import br.ka.model.Ultrassonografia;
 import br.ka.service.UltrassonografiaService;
 import jakarta.inject.Inject;
@@ -7,6 +8,8 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Path("/ultrassonografia")
@@ -17,7 +20,7 @@ public class UltrassonografiaResource {
 
     @GET
     public List<Ultrassonografia> getAll(){
-        return service.findAll();
+        return service.findAll().stream().filter(EntityClass::getAtivo).collect(Collectors.toList());
     }
     @GET
     @Path("/{id}")

@@ -2,6 +2,7 @@ package br.ka.resource;
 
 import br.ka.dto.VacinaDTO;
 import br.ka.dto.VacinaResponseDTO;
+import br.ka.model.EntityClass;
 import br.ka.model.Vacina;
 import br.ka.service.VacinaService;
 import jakarta.inject.Inject;
@@ -22,7 +23,7 @@ public class VacinaResource {
 
     @GET
     public List<VacinaResponseDTO> getAll(){
-        return service.findAll().stream().map(VacinaResponseDTO::new).collect(Collectors.toList());
+        return service.findAll().stream().filter(EntityClass::getAtivo).map(VacinaResponseDTO::new).collect(Collectors.toList());
     }
     @GET
     @Path("/{id}")

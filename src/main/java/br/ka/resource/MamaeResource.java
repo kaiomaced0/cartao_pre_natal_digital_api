@@ -3,6 +3,7 @@ package br.ka.resource;
 import br.ka.dto.MamaeResponseDTO;
 import br.ka.dto.MudarSenhaDTO;
 import br.ka.dto.UsuarioDTO;
+import br.ka.model.EntityClass;
 import br.ka.model.Mamae;
 import br.ka.service.MamaeService;
 import jakarta.inject.Inject;
@@ -23,7 +24,7 @@ public class MamaeResource {
 
     @GET
     public List<MamaeResponseDTO> getAll(){
-        return service.findAll().stream().map(mamae -> new MamaeResponseDTO(mamae)).collect(Collectors.toList());
+        return service.findAll().stream().filter(EntityClass::getAtivo).map(mamae -> new MamaeResponseDTO(mamae)).collect(Collectors.toList());
     }
     @GET
     @Path("/{id}")

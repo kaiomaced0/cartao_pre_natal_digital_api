@@ -2,6 +2,7 @@ package br.ka.resource;
 
 import br.ka.dto.UsuarioDTO;
 import br.ka.dto.UsuarioResponseDTO;
+import br.ka.model.EntityClass;
 import br.ka.model.Usuario;
 import br.ka.service.UsuarioService;
 import jakarta.inject.Inject;
@@ -22,7 +23,7 @@ public class UsuarioResource {
 
     @GET
     public List<UsuarioResponseDTO> getAll(){
-        return service.findAll().stream().map(UsuarioResponseDTO::new).collect(Collectors.toList());
+        return service.findAll().stream().filter(EntityClass::getAtivo).map(UsuarioResponseDTO::new).collect(Collectors.toList());
     }
     @GET
     @Path("/{id}")
