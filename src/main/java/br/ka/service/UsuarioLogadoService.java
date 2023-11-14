@@ -27,7 +27,7 @@ public class UsuarioLogadoService {
     public UsuarioResponseDTO updateSenha(MudarSenhaDTO senha) {
         try {
 
-            Usuario entity = usuarioRepository.findById(getPerfilUsuarioLogado().id());
+            Usuario entity = usuarioRepository.findByIdModificado(jsonWebToken.getSubject());
 
             if(hash.getHashSenha(senha.senhaAntiga()) != entity.getSenha())
                 throw new Exception("Senha anterior Incorreta");
@@ -38,19 +38,6 @@ public class UsuarioLogadoService {
             return null;
         }
 
-    }
-
-    public UsuarioResponseDTO getPerfilUsuarioLogado() {
-
-        try{
-            String cpf = jsonWebToken.getSubject();
-            Usuario user = usuarioRepository.findByCpf(cpf);
-
-            return new UsuarioResponseDTO(user);
-        } catch (Exception e) {
-
-            return null;
-        }
     }
 
 }

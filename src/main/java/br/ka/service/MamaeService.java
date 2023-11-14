@@ -1,6 +1,7 @@
 package br.ka.service;
 
 import br.ka.dto.AuthUsuarioDTO;
+import br.ka.dto.MamaeResponseDTO;
 import br.ka.dto.MudarSenhaDTO;
 import br.ka.dto.UsuarioDTO;
 import br.ka.model.Gestacao;
@@ -13,7 +14,10 @@ import br.ka.repository.UsuarioRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Response;
+import org.eclipse.microprofile.jwt.JsonWebToken;
 
 import java.util.HashSet;
 import java.util.List;
@@ -36,6 +40,17 @@ public class MamaeService{
     @Inject
     UsuarioLogadoService usuarioLogadoService;
 
+    @Inject
+    JsonWebToken jsonWebToken;
+
+    public Response getUsuarioLogado() {
+        try {
+            return Response.ok(new MamaeResponseDTO(repository.findByIdModificado(jsonWebToken.getSubject()))).build();
+        }catch (Exception e){
+            return Response.status(Response.Status.NO_CONTENT).build();
+        }
+
+    }
 
     @Transactional
     public Response insert(UsuarioDTO usuarioDTO){
@@ -74,7 +89,7 @@ public class MamaeService{
 
     @Transactional
     public Response setConvenio(String convenio){
-        Usuario u = usuarioRepository.findByCpf(usuarioLogadoService.getPerfilUsuarioLogado().cpf());
+        Usuario u = usuarioRepository.findByIdModificado(jsonWebToken.getSubject());
         repository.findById(u.getId()).setConvenio(convenio);
         return Response.status(Response.Status.OK).build();
     }

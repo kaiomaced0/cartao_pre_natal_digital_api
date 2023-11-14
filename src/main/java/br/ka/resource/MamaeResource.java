@@ -3,6 +3,7 @@ package br.ka.resource;
 import br.ka.dto.MamaeResponseDTO;
 import br.ka.dto.MudarSenhaDTO;
 import br.ka.dto.UsuarioDTO;
+import br.ka.dto.UsuarioResponseDTO;
 import br.ka.model.EntityClass;
 import br.ka.model.Mamae;
 import br.ka.service.MamaeService;
@@ -22,6 +23,7 @@ public class MamaeResource {
     private MamaeService service;
 
 
+
     @GET
     public List<MamaeResponseDTO> getAll(){
         return service.findAll().stream().filter(EntityClass::getAtivo).map(mamae -> new MamaeResponseDTO(mamae)).collect(Collectors.toList());
@@ -31,6 +33,13 @@ public class MamaeResource {
     public MamaeResponseDTO getById(@PathParam("id") Long id) {
 
         return new MamaeResponseDTO(service.findById(id));
+    }
+
+    @GET
+    @Path("/usuariologado")
+    public Response getUsuarioLogado() {
+        return service.getUsuarioLogado();
+
     }
 
     @POST
