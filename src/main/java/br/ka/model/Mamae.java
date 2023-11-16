@@ -70,19 +70,19 @@ public class Mamae extends Usuario {
         this.convenio = convenio;
     }
 
-    public List<String> getContatoEmergencia() {
-        return contatoEmergencia;
-    }
-
-    public void setContatoEmergencia(List<String> contatoEmergencia) {
-        this.contatoEmergencia = contatoEmergencia;
-    }
-
     public Gestacao getGestacao() {
         return gestacao;
     }
 
     public void setGestacao(Gestacao gestacao) {
         this.gestacao = gestacao;
+    }
+
+    public String getContatoEmergencia() {
+        return contatoEmergencia;
+    }
+
+    public void setContatoEmergencia(String contatoEmergencia) {
+        this.contatoEmergencia = contatoEmergencia;
     }
 }
