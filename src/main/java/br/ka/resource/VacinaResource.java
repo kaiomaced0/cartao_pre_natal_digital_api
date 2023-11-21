@@ -23,17 +23,18 @@ public class VacinaResource {
 
     @GET
     public List<VacinaResponseDTO> getAll(){
-        return service.findAll().stream().filter(EntityClass::getAtivo).map(VacinaResponseDTO::new).collect(Collectors.toList());
+        return service.findAll();
     }
     @GET
     @Path("/{id}")
     public VacinaResponseDTO getById(@PathParam("id") Long id) {
-        return new VacinaResponseDTO(service.findById(id));
+        return service.findById(id);
     }
 
     @POST
-    public Response insert(VacinaDTO entity) {
-        return service.insert(entity);
+    @Path("/{id}")
+    public Response insert(@PathParam("id") Long id, VacinaDTO entity) {
+        return service.insert(id, entity);
     }
 
     @PUT
@@ -45,6 +46,6 @@ public class VacinaResource {
     @PATCH
     @Path("/delete/{id}")
     public void delete(@PathParam("id") Long id) {
-        service.findById(id).setAtivo(false);
+        service.deleteById(id);
     }
 }

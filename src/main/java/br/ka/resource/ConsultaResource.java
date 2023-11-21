@@ -20,12 +20,12 @@ public class ConsultaResource {
     private ConsultaService service;
 
     @GET
-    public List<Consulta> getAll(){
-        return service.findAll().stream().filter(EntityClass::getAtivo).collect(Collectors.toList());
+    public List<ConsultaResponseDTO> getAll(){
+        return service.findAll();
     }
     @GET
     @Path("/{id}")
-    public Consulta getById(@PathParam("id") Long id) {
+    public ConsultaResponseDTO getById(@PathParam("id") Long id) {
         return service.findById(id);
     }
 
@@ -44,7 +44,7 @@ public class ConsultaResource {
     @PATCH
     @Path("/delete/{id}")
     public void delete(@PathParam("id") Long id) {
-        service.findById(id).setAtivo(false);
+        service.deleteById(id);
     }
 
 }

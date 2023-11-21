@@ -13,6 +13,11 @@ public class Mamae extends Usuario {
     @OneToMany
     @JoinColumn(name = "acompanhamento_mamae")
     private List<Acompanhamento> acompanhamentos;
+
+    @OneToMany
+    @JoinColumn(name = "vacina_mamae")
+    private List<Vacina> vacinas;
+
     @OneToMany
     @JoinColumn(name = "consulta_mamae")
     private List<Consulta> consultas;
@@ -36,6 +41,15 @@ public class Mamae extends Usuario {
     @ManyToOne
     @JoinColumn(name = "medico_medico")
     private Medico medico;
+
+
+    public List<Vacina> getVacinas() {
+        return vacinas;
+    }
+
+    public void setVacinas(List<Vacina> vacinas) {
+        this.vacinas = vacinas;
+    }
 
     public List<Consulta> getConsultas() {
         return consultas;

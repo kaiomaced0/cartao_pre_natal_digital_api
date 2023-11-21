@@ -32,17 +32,8 @@ public class MamaeService{
 
     @Inject
     UsuarioRepository usuarioRepository;
-
     @Inject
-    UsuarioLogadoService usuarioLogadoService;
-
-    @Inject
-    AcompanhamentoRepository acompanhamentoRepository;
-    @Inject
-    ConsultaRepository consultaRepository;
-
-    @Inject
-    ExameRepository exameRepository;
+    VacinaService vacinaService;
 
     @Inject
     JsonWebToken jsonWebToken;
@@ -92,6 +83,11 @@ public class MamaeService{
         }catch (Exception e){
             return Response.status(Response.Status.NO_CONTENT).build();
         }
+    }
+    @Transactional
+    public Response insertVacina(VacinaDTO vacinaDTO){
+        Mamae m = repository.findByIdModificado(jsonWebToken.getSubject());
+        return vacinaService.insert(m.getId(),vacinaDTO);
     }
 
     @Transactional

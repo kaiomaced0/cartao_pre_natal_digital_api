@@ -88,6 +88,12 @@ public class MamaeResource {
         return service.mudarDadosMamae(mudarDadosMamaeDTO);
     }
 
+    @POST
+    @Path("/vacina")
+    public Response insertVacina(VacinaDTO entity) {
+        return service.insertVacina(entity);
+    }
+
 
     @PUT
     @Path("/{id}")
