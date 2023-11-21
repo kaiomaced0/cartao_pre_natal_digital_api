@@ -2,6 +2,8 @@ package br.ka.model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Vacina extends EntityClass {
@@ -18,8 +20,18 @@ public class Vacina extends EntityClass {
 
     private String loteVacina;
 
+    private LocalDate dataRealizada;
+
     @Enumerated(EnumType.STRING)
     private TipoVacina tipoVacina;
+
+    public LocalDate getDataRealizada() {
+        return dataRealizada;
+    }
+
+    public void setDataRealizada(LocalDate dataRealizada) {
+        this.dataRealizada = dataRealizada;
+    }
 
     public TipoVacina getTipoVacina() {
         return tipoVacina;

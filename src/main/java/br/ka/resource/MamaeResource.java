@@ -1,9 +1,6 @@
 package br.ka.resource;
 
-import br.ka.dto.MamaeResponseDTO;
-import br.ka.dto.MudarSenhaDTO;
-import br.ka.dto.UsuarioDTO;
-import br.ka.dto.UsuarioResponseDTO;
+import br.ka.dto.*;
 import br.ka.model.EntityClass;
 import br.ka.model.Mamae;
 import br.ka.service.MamaeService;
@@ -41,6 +38,31 @@ public class MamaeResource {
         return service.getUsuarioLogado();
 
     }
+    @GET
+    @Path("/acompanhamentos")
+    public Response getAcompanhamentos() {
+        return service.getAcompanhamentos();
+
+    }
+    @GET
+    @Path("/consultas")
+    public Response getConsultas() {
+        return service.getConsultas();
+
+    }
+    @GET
+    @Path("/exames")
+    public Response getExames() {
+        return service.getExames();
+
+    }
+
+    @GET
+    @Path("/medico")
+    public Response getMedico() {
+        return service.getMedico();
+
+    }
 
     @POST
     public Response create(UsuarioDTO usuarioDTO) {
@@ -58,6 +80,12 @@ public class MamaeResource {
     @Path("/convenio")
     public Response setConvenio(String convenio){
         return service.setConvenio(convenio);
+    }
+
+    @PATCH
+    @Path("/mudardados")
+    public Response mudarDadosMamae(MudarDadosMamaeDTO mudarDadosMamaeDTO){
+        return service.mudarDadosMamae(mudarDadosMamaeDTO);
     }
 
 

@@ -1,5 +1,7 @@
 package br.ka.resource;
 
+import br.ka.dto.ConsultaDTO;
+import br.ka.dto.ConsultaResponseDTO;
 import br.ka.model.Consulta;
 import br.ka.model.EntityClass;
 import br.ka.service.ConsultaService;
@@ -28,8 +30,9 @@ public class ConsultaResource {
     }
 
     @POST
-    public Consulta create(Consulta entity) {
-        return service.create(entity);
+    @Path("/{id}")
+    public ConsultaResponseDTO create(@PathParam("id") Long id, ConsultaDTO entity) {
+        return service.create(id, entity);
     }
 
     @PUT

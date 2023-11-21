@@ -1,6 +1,7 @@
 package br.ka.resource;
 
 import br.ka.dto.AcompanhamentoDTO;
+import br.ka.dto.AcompanhamentoResponseDTO;
 import br.ka.model.Acompanhamento;
 import br.ka.model.EntityClass;
 import br.ka.service.AcompanhamentoService;
@@ -20,12 +21,12 @@ public class AcompanhamentoResource {
     AcompanhamentoService service;
 
     @GET
-    public List<Acompanhamento> getAll(){
-        return service.findAll().stream().filter(EntityClass::getAtivo).collect(Collectors.toList());
+    public List<AcompanhamentoResponseDTO> getAll(){
+        return service.findAll();
     }
     @GET
     @Path("/{id}")
-    public Acompanhamento getById(@PathParam("id") Long id) {
+    public AcompanhamentoResponseDTO getById(@PathParam("id") Long id) {
         return service.findById(id);
     }
 

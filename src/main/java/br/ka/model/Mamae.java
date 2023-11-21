@@ -13,6 +13,9 @@ public class Mamae extends Usuario {
     @OneToMany
     @JoinColumn(name = "acompanhamento_mamae")
     private List<Acompanhamento> acompanhamentos;
+    @OneToMany
+    @JoinColumn(name = "consulta_mamae")
+    private List<Consulta> consultas;
 
     @OneToMany
     @JoinColumn(name = "exame_mamae")
@@ -29,6 +32,26 @@ public class Mamae extends Usuario {
     @OneToOne
     @JoinColumn(name = "gestacao_mamae")
     private Gestacao gestacao;
+
+    @ManyToOne
+    @JoinColumn(name = "medico_medico")
+    private Medico medico;
+
+    public List<Consulta> getConsultas() {
+        return consultas;
+    }
+
+    public void setConsultas(List<Consulta> consultas) {
+        this.consultas = consultas;
+    }
+
+    public Medico getMedico() {
+        return medico;
+    }
+
+    public void setMedico(Medico medico) {
+        this.medico = medico;
+    }
 
     public Boolean getEmGestacao() {
         return emGestacao;

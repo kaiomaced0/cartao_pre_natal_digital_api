@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 
+import java.time.LocalDate;
+
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Exame extends EntityClass {
@@ -13,6 +15,16 @@ public class Exame extends EntityClass {
     private String localExameRealizado;
 
     private String observacao;
+
+    private LocalDate dataRealizada;
+
+    public LocalDate getDataRealizada() {
+        return dataRealizada;
+    }
+
+    public void setDataRealizada(LocalDate dataRealizada) {
+        this.dataRealizada = dataRealizada;
+    }
 
     public String getTipoExame() {
         return tipoExame;

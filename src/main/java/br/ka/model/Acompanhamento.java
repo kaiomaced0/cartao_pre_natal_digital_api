@@ -2,6 +2,8 @@ package br.ka.model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Acompanhamento extends EntityClass {
@@ -10,9 +12,19 @@ public class Acompanhamento extends EntityClass {
 
     private String observacao;
 
+    private LocalDate dataRealizada;
+
     private String dados;
 
     private Double peso;
+
+    public LocalDate getDataRealizada() {
+        return dataRealizada;
+    }
+
+    public void setDataRealizada(LocalDate dataRealizada) {
+        this.dataRealizada = dataRealizada;
+    }
 
     public String getIdadeGestacional() {
         return idadeGestacional;

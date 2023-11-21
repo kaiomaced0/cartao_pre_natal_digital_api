@@ -13,10 +13,12 @@ public record MamaeResponseDTO(
         List<String> perfis,
         Boolean emGestacao,
         String idadeGestacional,
-        String convenio
+        String convenio,
+        String contatoEmergencia,
+        String nomeBebe
 
 ) {
     public MamaeResponseDTO(Mamae user) {
-    this(user.getId(), user.getNome(), user.getEmail(), user.getCpf(), user.getPerfis().stream().map(perfil -> perfil.getLabel()).toList(), user.getEmGestacao(),user.getGestacao().getIdadeGestacional(), user.getConvenio());
+    this(user.getId(), user.getNome(), user.getEmail(), user.getCpf(), user.getPerfis().stream().map(perfil -> perfil.getLabel()).toList(), user.getEmGestacao(),user.getGestacao().getIdadeGestacional(), user.getConvenio(), user.getContatoEmergencia(), user.getGestacao().getNomeBebe());
 }
 }

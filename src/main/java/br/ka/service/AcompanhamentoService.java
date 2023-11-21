@@ -1,7 +1,9 @@
 package br.ka.service;
 
 import br.ka.dto.AcompanhamentoDTO;
+import br.ka.dto.AcompanhamentoResponseDTO;
 import br.ka.model.Acompanhamento;
+import br.ka.model.EntityClass;
 import br.ka.model.Mamae;
 import br.ka.repository.AcompanhamentoRepository;
 import br.ka.repository.MamaeRepository;
@@ -11,6 +13,7 @@ import jakarta.transaction.Transactional;
 import jakarta.ws.rs.core.Response;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class AcompanhamentoService{
@@ -29,7 +32,7 @@ public class AcompanhamentoService{
         entity.setIdadeGestacional(m.getGestacao().getIdadeGestacional());
         repository.persist(entity);
         m.getAcompanhamentos().add(entity);
-        return Response.status(Response.Status.OK).build();
+        return Response.ok(new AcompanhamentoResponseDTO(entity)).build();
     }
 
     @Transactional
@@ -37,13 +40,13 @@ public class AcompanhamentoService{
         repository.findById(id).setAtivo(false);
     }
 
-    public List<Acompanhamento> findAll() {
-        return repository.listAll();
+    public List<AcompanhamentoResponseDTO> findAll() {
+        return repository.listAll().stream().filter(EntityClass::getAtivo).map(AcompanhamentoResponseDTO::new).collect(Collectors.toList());
     }
 
-    public Acompanhamento findById(Long id) {
-        return repository
-                .findById(id);
+    public AcompanhamentoResponseDTO findById(Long id) {
+        return new AcompanhamentoResponseDTO(repository
+                .findById(id));
     }
 
     @Transactional

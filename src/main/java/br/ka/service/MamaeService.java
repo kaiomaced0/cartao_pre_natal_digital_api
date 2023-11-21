@@ -1,16 +1,11 @@
 package br.ka.service;
 
-import br.ka.dto.AuthUsuarioDTO;
-import br.ka.dto.MamaeResponseDTO;
-import br.ka.dto.MudarSenhaDTO;
-import br.ka.dto.UsuarioDTO;
+import br.ka.dto.*;
 import br.ka.model.Gestacao;
 import br.ka.model.Mamae;
 import br.ka.model.Perfil;
 import br.ka.model.Usuario;
-import br.ka.repository.GestacaoRepository;
-import br.ka.repository.MamaeRepository;
-import br.ka.repository.UsuarioRepository;
+import br.ka.repository.*;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -22,6 +17,7 @@ import org.eclipse.microprofile.jwt.JsonWebToken;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class MamaeService{
@@ -41,6 +37,14 @@ public class MamaeService{
     UsuarioLogadoService usuarioLogadoService;
 
     @Inject
+    AcompanhamentoRepository acompanhamentoRepository;
+    @Inject
+    ConsultaRepository consultaRepository;
+
+    @Inject
+    ExameRepository exameRepository;
+
+    @Inject
     JsonWebToken jsonWebToken;
 
     public Response getUsuarioLogado() {
@@ -50,6 +54,44 @@ public class MamaeService{
             return Response.status(Response.Status.NO_CONTENT).build();
         }
 
+    }
+
+    public Response getAcompanhamentos() {
+        try {
+
+            return Response.ok(repository.findByIdModificado(jsonWebToken.getSubject()).getAcompanhamentos().stream().map(AcompanhamentoResponseDTO::new).collect(Collectors.toList())).build();
+        }catch (Exception e){
+            return Response.status(Response.Status.NO_CONTENT).build();
+        }
+
+    }
+    public Response getConsultas() {
+        try {
+
+            return Response.ok(repository.findByIdModificado(jsonWebToken.getSubject()).getConsultas().stream().map(ConsultaResponseDTO::new).collect(Collectors.toList())).build();
+        }catch (Exception e){
+            return Response.status(Response.Status.NO_CONTENT).build();
+        }
+
+    }
+
+    public Response getExames() {
+        try {
+
+            return Response.ok(repository.findByIdModificado(jsonWebToken.getSubject()).getExames().stream().map(ExameResponseDTO::new).collect(Collectors.toList())).build();
+        }catch (Exception e){
+            return Response.status(Response.Status.NO_CONTENT).build();
+        }
+
+    }
+
+    public Response getMedico(){
+        try {
+
+            return Response.ok(new MedicoResponseDTO(repository.findByIdModificado(jsonWebToken.getSubject()).getMedico())).build();
+        }catch (Exception e){
+            return Response.status(Response.Status.NO_CONTENT).build();
+        }
     }
 
     @Transactional
@@ -94,6 +136,13 @@ public class MamaeService{
         return Response.status(Response.Status.OK).build();
     }
 
+    @Transactional
+    public Response mudarDadosMamae(MudarDadosMamaeDTO mudarDadosMamaeDTO){
+        Usuario u = usuarioRepository.findByIdModificado(jsonWebToken.getSubject());
+        repository.findById(u.getId()).getGestacao().setNomeBebe(mudarDadosMamaeDTO.nomeBebe());
+        repository.findById(u.getId()).setContatoEmergencia(mudarDadosMamaeDTO.contatoEmergencia());
+        return Response.status(Response.Status.OK).build();
+    }
 
     public List<Mamae> findAll() {
         return repository.listAll();

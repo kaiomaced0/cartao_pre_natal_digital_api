@@ -2,13 +2,11 @@ package br.ka.model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Consulta extends EntityClass {
-
-    @ManyToOne
-    @JoinColumn(name = "usuario_consulta")
-    private Usuario usuario;
 
     @Enumerated(EnumType.STRING)
     private TipoConsulta tipoConsulta;
@@ -19,12 +17,14 @@ public class Consulta extends EntityClass {
 
     private String observacao;
 
-    public Usuario getUsuario() {
-        return usuario;
+    private LocalDate dataRealizada;
+
+    public LocalDate getDataRealizada() {
+        return dataRealizada;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setDataRealizada(LocalDate dataRealizada) {
+        this.dataRealizada = dataRealizada;
     }
 
     public TipoConsulta getTipoConsulta() {

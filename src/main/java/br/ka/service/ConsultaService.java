@@ -1,7 +1,12 @@
 package br.ka.service;
 
+import br.ka.dto.ConsultaDTO;
+import br.ka.dto.ConsultaResponseDTO;
 import br.ka.model.Consulta;
+import br.ka.model.TipoConsulta;
 import br.ka.repository.ConsultaRepository;
+import br.ka.repository.MamaeRepository;
+import br.ka.repository.MedicoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -13,6 +18,11 @@ public class ConsultaService{
 
     @Inject
     ConsultaRepository repository;
+    @Inject
+    MedicoRepository medicoRepository;
+
+    @Inject
+    MamaeRepository mamaeRepository;
 
     public List<Consulta> findAll() {
         return repository.listAll();
@@ -23,10 +33,14 @@ public class ConsultaService{
                 .findById(id);
     }
     @Transactional
-    public Consulta create(Consulta entity) {
-        Consulta t = entity;
+    public ConsultaResponseDTO create(Long id, ConsultaDTO entity) {
+        Consulta t = new Consulta();
+        t.setTipoConsulta(TipoConsulta.valueOf(entity.idTipoConsulta().intValue()));
+        t.setMedico(medicoRepository.findById(entity.idMedico()));
+        t.setObservacao(entity.observacao());
+        t.setUsuario(mamaeRepository.findById(id));
         repository.persist(t);
-        return entity;
+        return new ConsultaResponseDTO(t);
     }
 
     @Transactional

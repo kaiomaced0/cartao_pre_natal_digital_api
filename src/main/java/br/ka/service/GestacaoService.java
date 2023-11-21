@@ -27,7 +27,7 @@ public class GestacaoService{
     @Scheduled(every = "12h")
     @Transactional
     public void atualizaIdadeGestacional(){
-        repository.findAll().stream().forEach(gestacao -> repository.findById(gestacao.getId()).setIdadeGestacional("Semana - " + ChronoUnit.WEEKS.between(gestacao.getDataInicio(), LocalDate.now()) + " "));
+        repository.findAll().stream().forEach(gestacao -> repository.findById(gestacao.getId()).setIdadeGestacional(ChronoUnit.WEEKS.between(gestacao.getDataInicio(), LocalDate.now()) + " semanas "));
     }
 
     public List<Gestacao> findAll() {
