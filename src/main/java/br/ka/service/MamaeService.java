@@ -1,11 +1,9 @@
 package br.ka.service;
 
 import br.ka.dto.*;
-import br.ka.model.Gestacao;
-import br.ka.model.Mamae;
-import br.ka.model.Perfil;
-import br.ka.model.Usuario;
+import br.ka.model.*;
 import br.ka.repository.*;
+import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -14,6 +12,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Response;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -38,13 +37,28 @@ public class MamaeService{
     @Inject
     JsonWebToken jsonWebToken;
 
+    @Inject
+    NutricaoRepository nutricaoRepository;
+
     public Response getUsuarioLogado() {
         try {
-            return Response.ok(new MamaeResponseDTO(repository.findByIdModificado(jsonWebToken.getSubject()))).build();
+            Mamae m = repository.findByIdModificado(jsonWebToken.getSubject());
+            return Response.ok(new MamaeResponseDTO(m)).build();
         }catch (Exception e){
             return Response.status(Response.Status.NO_CONTENT).build();
         }
 
+    }
+
+    public Response getNutricao(){
+        try {
+            List<Nutricao> nutricoes = new ArrayList<>();
+            Mamae m = repository.findByIdModificado(jsonWebToken.getSubject());
+            nutricoes = nutricaoRepository.findAll().stream().filter(nutricao -> !nutricao.getEspecifico() || nutricao.getEspecifico() && nutricao.getMamae().getId() == m.getId()).collect(Collectors.toList());
+            return Response.ok(nutricoes.stream().map(NutricaoResponseDTO::new).collect(Collectors.toList())).build();
+        }catch (Exception e){
+            return Response.status(Response.Status.NO_CONTENT).build();
+        }
     }
 
     public Response getConsultas() {

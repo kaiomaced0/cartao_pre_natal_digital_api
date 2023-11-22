@@ -15,10 +15,11 @@ public record MamaeResponseDTO(
         String idadeGestacional,
         String convenio,
         String contatoEmergencia,
-        String nomeBebe
+        String nomeBebe,
+        String dadosMedico
 
 ) {
     public MamaeResponseDTO(Mamae user) {
-    this(user.getId(), user.getNome(), user.getEmail(), user.getCpf(), user.getPerfis().stream().map(perfil -> perfil.getLabel()).toList(), user.getEmGestacao(),user.getGestacao().getIdadeGestacional(), user.getConvenio(), user.getContatoEmergencia(), user.getGestacao().getNomeBebe());
+    this(user.getId(), user.getNome(), user.getEmail(), user.getCpf(), user.getPerfis().stream().map(perfil -> perfil.getLabel()).toList(), user.getEmGestacao(),user.getGestacao().getIdadeGestacional(), user.getConvenio(), user.getContatoEmergencia(), user.getGestacao().getNomeBebe(), user.getMedico().getNome() + " - " + user.getMedico().getTelefone());
 }
 }

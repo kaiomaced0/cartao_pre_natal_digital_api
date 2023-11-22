@@ -52,6 +52,13 @@ public class MamaeResource {
     }
 
     @GET
+    @Path("/nutricao")
+    public Response getNutricao() {
+        return service.getNutricao();
+
+    }
+
+    @GET
     @Path("/medico")
     public Response getMedico() {
         return service.getMedico();
