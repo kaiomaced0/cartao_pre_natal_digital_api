@@ -9,19 +9,8 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Medico extends Usuario {
 
-    @Column(name = "lista_especializacao_medico")
-    @Enumerated(EnumType.STRING)
-    private List<Especializacao> especializacoes;
-
     private String crm;
 
-    public List<Especializacao> getEspecializacoes() {
-        return especializacoes;
-    }
-
-    public void setEspecializacoes(List<Especializacao> especializacoes) {
-        this.especializacoes = especializacoes;
-    }
 
     public String getCrm() {
         return crm;

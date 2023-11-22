@@ -5,7 +5,6 @@ import br.ka.dto.ConsultaResponseDTO;
 import br.ka.model.Consulta;
 import br.ka.model.EntityClass;
 import br.ka.model.Mamae;
-import br.ka.model.TipoConsulta;
 import br.ka.repository.ConsultaRepository;
 import br.ka.repository.MamaeRepository;
 import br.ka.repository.MedicoRepository;
@@ -14,6 +13,8 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,13 +45,22 @@ public class ConsultaService{
     }
     @Transactional
     public ConsultaResponseDTO create(Long idMamae, ConsultaDTO entity) {
-        Consulta t = new Consulta();
-        t.setTipoConsulta(TipoConsulta.valueOf(entity.idTipoConsulta().intValue()));
-        t.setMedico(medicoRepository.findById(entity.idMedico()));
-        t.setObservacao(entity.observacao());
-        Mamae m = mamaeRepository.findById(idMamae);
-        repository.persist(t);
-        return new ConsultaResponseDTO(t);
+
+        try {
+            Consulta t = new Consulta();
+            t.setMedico(medicoRepository.findById(entity.idMedico()));
+            t.setObservacao(entity.observacao());
+            t.setTitulo(entity.titulo());
+            t.setDataRealizada(LocalDate.now());
+            Mamae m = mamaeRepository.findById(idMamae);
+            m.getGestacao().setIdadeGestacional(ChronoUnit.WEEKS.between(m.getGestacao().getDataInicio(), LocalDate.now()) + " semanas ");
+            t.setIdadeGestacional(m.getGestacao().getIdadeGestacional());
+            repository.persist(t);
+            m.getConsultas().add(t);
+            return new ConsultaResponseDTO(t);
+        }catch (Exception e){
+            return null;
+        }
     }
 
     @Transactional

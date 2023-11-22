@@ -42,11 +42,12 @@ public class GestacaoService{
     public GestacaoResponseDTO create(GestacaoDTO entity) {
         Mamae m = mamaeRepository.findById(entity.idMamae());
         Gestacao t = new Gestacao();
-
+        t.setRealizado(false);
         repository.persist(t);
         if(m.getEmGestacao() == false){
             m.setGestacao(t);
             m.setEmGestacao(true);
+            m.getGestacoes().add(t);
         }
         return new GestacaoResponseDTO(t);
     }
@@ -59,5 +60,10 @@ public class GestacaoService{
     @Transactional
     public void deleteById(Long id) {
         repository.findById(id).setAtivo(false);
+    }
+
+    @Transactional
+    public void finalizar(Long id) {
+        repository.findById(id).setRealizado(true);
     }
 }

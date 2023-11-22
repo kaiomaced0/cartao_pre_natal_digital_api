@@ -35,6 +35,7 @@ public class VacinaService{
         }
     }
 
+
     public List<VacinaResponseDTO> findAll() {
         return repository.listAll().stream().filter(EntityClass::getAtivo).map(VacinaResponseDTO::new).collect(Collectors.toList());
     }

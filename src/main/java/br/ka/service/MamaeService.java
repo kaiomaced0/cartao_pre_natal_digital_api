@@ -47,15 +47,6 @@ public class MamaeService{
 
     }
 
-    public Response getAcompanhamentos() {
-        try {
-
-            return Response.ok(repository.findByIdModificado(jsonWebToken.getSubject()).getAcompanhamentos().stream().map(AcompanhamentoResponseDTO::new).collect(Collectors.toList())).build();
-        }catch (Exception e){
-            return Response.status(Response.Status.NO_CONTENT).build();
-        }
-
-    }
     public Response getConsultas() {
         try {
 
@@ -108,7 +99,6 @@ public class MamaeService{
         mamae.setGestacao(gestacao);
 
         return Response.status(Response.Status.OK).build();
-
     }
 
     @Transactional

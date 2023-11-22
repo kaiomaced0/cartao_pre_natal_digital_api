@@ -7,11 +7,10 @@ import java.time.LocalDate;
 public record ConsultaResponseDTO(
         Long idConsulta,
         MedicoResponseDTO medico,
-        String tipoConsulta,
         String observacao,
         LocalDate dataRealizada
 ) {
     public ConsultaResponseDTO(Consulta consulta){
-        this(consulta.getId(), new MedicoResponseDTO(consulta.getMedico()), consulta.getTipoConsulta().getLabel(), consulta.getObservacao(),consulta.getDataRealizada());
+        this(consulta.getId(), new MedicoResponseDTO(consulta.getMedico()), consulta.getObservacao(),consulta.getDataRealizada());
     }
 }

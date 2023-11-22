@@ -2,10 +2,7 @@ package br.ka.service;
 
 import br.ka.dto.MedicoDTO;
 import br.ka.dto.MedicoResponseDTO;
-import br.ka.dto.UsuarioResponseDTO;
-import br.ka.model.Especializacao;
 import br.ka.model.Medico;
-import br.ka.model.Usuario;
 import br.ka.repository.MedicoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -40,9 +37,6 @@ public class MedicoService{
         t.setCpf(entity.cpf());
         t.setEmail(entity.email());
         t.setSenha(hash.getHashSenha(entity.senha()));
-        List<Especializacao> especializacoes = new ArrayList<>();
-        especializacoes.add(Especializacao.valueOf(entity.idEspecializacao().intValue()));
-        t.setEspecializacoes(especializacoes);
         repository.persist(t);
         return new MedicoResponseDTO(t);
     }

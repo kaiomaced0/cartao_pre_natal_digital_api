@@ -22,8 +22,6 @@ public class Vacina extends EntityClass {
 
     private LocalDate dataRealizada;
 
-    @Enumerated(EnumType.STRING)
-    private TipoVacina tipoVacina;
 
     public LocalDate getDataRealizada() {
         return dataRealizada;
@@ -31,14 +29,6 @@ public class Vacina extends EntityClass {
 
     public void setDataRealizada(LocalDate dataRealizada) {
         this.dataRealizada = dataRealizada;
-    }
-
-    public TipoVacina getTipoVacina() {
-        return tipoVacina;
-    }
-
-    public void setTipoVacina(TipoVacina tipoVacina) {
-        this.tipoVacina = tipoVacina;
     }
 
     public String getNome() {

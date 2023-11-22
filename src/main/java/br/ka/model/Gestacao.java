@@ -3,6 +3,7 @@ package br.ka.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -14,9 +15,7 @@ public class Gestacao extends EntityClass {
 
     private LocalDate dataInicio;
 
-    @OneToOne
-    @PrimaryKeyJoinColumn
-    private Vacina vacinaDTPa;
+    private Boolean vacinaDTPa;
 
     private Boolean realizado;
 
@@ -46,11 +45,11 @@ public class Gestacao extends EntityClass {
         this.nomeBebe = nomeBebe;
     }
 
-    public Vacina getVacinaDTPa() {
+    public Boolean getVacinaDTPa() {
         return vacinaDTPa;
     }
 
-    public void setVacinaDTPa(Vacina vacinaDTPa) {
+    public void setVacinaDTPa(Boolean vacinaDTPa) {
         this.vacinaDTPa = vacinaDTPa;
     }
 

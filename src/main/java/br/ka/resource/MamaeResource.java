@@ -39,12 +39,6 @@ public class MamaeResource {
 
     }
     @GET
-    @Path("/acompanhamentos")
-    public Response getAcompanhamentos() {
-        return service.getAcompanhamentos();
-
-    }
-    @GET
     @Path("/consultas")
     public Response getConsultas() {
         return service.getConsultas();

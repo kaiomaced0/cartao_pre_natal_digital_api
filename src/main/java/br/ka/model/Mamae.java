@@ -11,10 +11,6 @@ public class Mamae extends Usuario {
     private Boolean emGestacao;
 
     @OneToMany
-    @JoinColumn(name = "acompanhamento_mamae")
-    private List<Acompanhamento> acompanhamentos;
-
-    @OneToMany
     @JoinColumn(name = "vacina_mamae")
     private List<Vacina> vacinas;
 
@@ -38,10 +34,31 @@ public class Mamae extends Usuario {
     @JoinColumn(name = "gestacao_mamae")
     private Gestacao gestacao;
 
+    @OneToMany
+    @JoinColumn(name = "mamae_gestacao")
+    private List<Gestacao> gestacoes;
+
     @ManyToOne
     @JoinColumn(name = "medico_medico")
     private Medico medico;
 
+    private String observacoes;
+
+    public String getObservacoes() {
+        return observacoes;
+    }
+
+    public void setObservacoes(String observacoes) {
+        this.observacoes = observacoes;
+    }
+
+    public List<Gestacao> getGestacoes() {
+        return gestacoes;
+    }
+
+    public void setGestacoes(List<Gestacao> gestacoes) {
+        this.gestacoes = gestacoes;
+    }
 
     public List<Vacina> getVacinas() {
         return vacinas;
@@ -73,14 +90,6 @@ public class Mamae extends Usuario {
 
     public void setEmGestacao(Boolean emGestacao) {
         this.emGestacao = emGestacao;
-    }
-
-    public List<Acompanhamento> getAcompanhamentos() {
-        return acompanhamentos;
-    }
-
-    public void setAcompanhamentos(List<Acompanhamento> acompanhamentos) {
-        this.acompanhamentos = acompanhamentos;
     }
 
     public List<Exame> getExames() {

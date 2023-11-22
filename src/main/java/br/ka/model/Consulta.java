@@ -8,16 +8,33 @@ import java.time.LocalDate;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Consulta extends EntityClass {
 
-    @Enumerated(EnumType.STRING)
-    private TipoConsulta tipoConsulta;
-
     @JoinColumn(name = "medico_consulta")
     @ManyToOne
     private Medico medico;
 
+    private String idadeGestacional;
+
     private String observacao;
 
+    private String titulo;
+
     private LocalDate dataRealizada;
+
+    public String getIdadeGestacional() {
+        return idadeGestacional;
+    }
+
+    public void setIdadeGestacional(String idadeGestacional) {
+        this.idadeGestacional = idadeGestacional;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
 
     public LocalDate getDataRealizada() {
         return dataRealizada;
@@ -25,14 +42,6 @@ public class Consulta extends EntityClass {
 
     public void setDataRealizada(LocalDate dataRealizada) {
         this.dataRealizada = dataRealizada;
-    }
-
-    public TipoConsulta getTipoConsulta() {
-        return tipoConsulta;
-    }
-
-    public void setTipoConsulta(TipoConsulta tipoConsulta) {
-        this.tipoConsulta = tipoConsulta;
     }
 
     public Medico getMedico() {
