@@ -20,6 +20,16 @@ public class Consulta extends EntityClass {
 
     private LocalDate dataRealizada;
 
+    private Long peso;
+
+    public Long getPeso() {
+        return peso;
+    }
+
+    public void setPeso(Long peso) {
+        this.peso = peso;
+    }
+
     public String getIdadeGestacional() {
         return idadeGestacional;
     }

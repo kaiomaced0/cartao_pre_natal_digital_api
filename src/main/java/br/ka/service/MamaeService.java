@@ -144,6 +144,13 @@ public class MamaeService{
         return Response.status(Response.Status.OK).build();
     }
 
+    @Transactional
+    public Response setObservacao(MamaeObservacaoDTO nome){
+        Usuario u = usuarioRepository.findByIdModificado(jsonWebToken.getSubject());
+        repository.findById(u.getId()).setObservacoes(nome.observacao());
+        return Response.status(Response.Status.OK).build();
+    }
+
     public List<Mamae> findAll() {
         return repository.listAll();
     }

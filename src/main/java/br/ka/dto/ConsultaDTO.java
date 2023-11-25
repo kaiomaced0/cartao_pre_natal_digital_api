@@ -3,7 +3,8 @@ package br.ka.dto;
 public record ConsultaDTO(
         Long idMedico,
         String titulo,
-        String observacao
+        String observacao,
+        Long peso
 
 ) {
 

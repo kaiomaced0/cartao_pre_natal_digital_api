@@ -5,12 +5,15 @@ import br.ka.model.Consulta;
 import java.time.LocalDate;
 
 public record ConsultaResponseDTO(
-        Long idConsulta,
+        Long id,
         MedicoResponseDTO medico,
         String observacao,
-        LocalDate dataRealizada
+        String titulo,
+        String idadeGestacional,
+        LocalDate dataRealizada,
+        Long peso
 ) {
     public ConsultaResponseDTO(Consulta consulta){
-        this(consulta.getId(), new MedicoResponseDTO(consulta.getMedico()), consulta.getObservacao(),consulta.getDataRealizada());
+        this(consulta.getId(), new MedicoResponseDTO(consulta.getMedico()), consulta.getObservacao(),consulta.getTitulo(), consulta.getIdadeGestacional(), consulta.getDataRealizada(), consulta.getPeso());
     }
 }

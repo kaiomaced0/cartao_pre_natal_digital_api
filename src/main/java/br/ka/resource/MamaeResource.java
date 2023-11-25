@@ -78,6 +78,12 @@ public class MamaeResource {
     }
 
     @PATCH
+    @Path("/observacao")
+    public Response setObservacao(MamaeObservacaoDTO nome){
+        return service.setObservacao(nome);
+    }
+
+    @PATCH
     @Path("/convenio")
     public Response setConvenio(String convenio){
         return service.setConvenio(convenio);
