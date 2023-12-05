@@ -23,6 +23,7 @@ public class VacinaService{
     @Inject
     MamaeRepository mamaeRepository;
 
+    @Transactional
     public Response insert(Long id, VacinaDTO vacinaDTO){
         try {
             Mamae m = mamaeRepository.findById(id);

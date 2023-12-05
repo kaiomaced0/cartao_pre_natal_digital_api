@@ -70,12 +70,6 @@ public class UsuarioService{
         return repository
                 .findById(id);
     }
-    @Transactional
-    public Usuario create(Usuario entity) {
-        Usuario t = entity;
-        repository.persist(t);
-        return entity;
-    }
 
     @Transactional
     public Usuario update(Usuario entity) {

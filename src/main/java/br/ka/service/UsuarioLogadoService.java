@@ -18,8 +18,6 @@ public class UsuarioLogadoService {
 
     @Inject
     UsuarioRepository usuarioRepository;
-//    @Inject
-//    SecurityContext securityContext;
     @Inject
     HashService hash;
 
@@ -27,7 +25,7 @@ public class UsuarioLogadoService {
     public UsuarioResponseDTO updateSenha(MudarSenhaDTO senha) {
         try {
 
-            Usuario entity = usuarioRepository.findByIdModificado(jsonWebToken.getSubject());
+            Usuario entity = usuarioRepository.findByCpf(jsonWebToken.getSubject());
 
             if(hash.getHashSenha(senha.senhaAntiga()) != entity.getSenha())
                 throw new Exception("Senha anterior Incorreta");

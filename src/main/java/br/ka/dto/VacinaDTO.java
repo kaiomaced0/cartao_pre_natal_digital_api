@@ -4,7 +4,7 @@ import br.ka.model.Vacina;
 
 public record VacinaDTO(
 
-        String nome, Double quantidadeDoses, Double doseAtual, String nomeProfissionalRealizouVacina, String localRealizado, String loteVacina
+        String nome, Integer quantidadeDoses, Integer doseAtual, String nomeProfissionalRealizouVacina, String localRealizado, String loteVacina
 ) {
     public Vacina criaVacina(VacinaDTO dto){
         Vacina v = new Vacina();

@@ -32,7 +32,7 @@ public class TokenJwtService{
             Log.info("Requisição TokenJwt.generateJwt()");
 
             return Jwt.issuer("unitins-jwt")
-                    .subject(usuario.getId().toString())
+                    .subject(usuario.getCpf())
                     .groups(roles)
                     .expiresAt(expiryDate)
                     .sign();

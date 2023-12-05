@@ -3,6 +3,7 @@ package br.ka.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -11,6 +12,10 @@ import java.util.Set;
 public class Usuario extends EntityClass {
 
     private String nome;
+
+    @OneToMany
+    @JoinColumn(name = "usuario_duvida")
+    private List<Observacao> duvidas;
 
     private String email;
 
@@ -29,6 +34,16 @@ public class Usuario extends EntityClass {
     @Column(name = "perfil", length = 30)
     private Set<Perfil> perfis;
 
+    public List<Observacao> getDuvidas() {
+        if(duvidas == null){
+            duvidas = new ArrayList<>();
+        }
+        return duvidas;
+    }
+
+    public void setDuvidas(List<Observacao> duvidas) {
+        this.duvidas = duvidas;
+    }
 
     public Set<Perfil> getPerfis() {
         return perfis;

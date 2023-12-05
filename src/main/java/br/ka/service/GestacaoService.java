@@ -2,6 +2,7 @@ package br.ka.service;
 
 import br.ka.dto.GestacaoDTO;
 import br.ka.dto.GestacaoResponseDTO;
+import br.ka.dto.GestacaoUpdateDTO;
 import br.ka.model.Gestacao;
 import br.ka.model.Mamae;
 import br.ka.repository.GestacaoRepository;
@@ -53,8 +54,10 @@ public class GestacaoService{
     }
 
     @Transactional
-    public Gestacao update(Gestacao entity) {
-        return repository.getEntityManager().merge(entity);
+    public GestacaoResponseDTO update(Long id, GestacaoUpdateDTO entity) {
+        Gestacao g = repository.findById(id);
+        g.setDataInicio(entity.dataInicio());
+        return new GestacaoResponseDTO(g);
     }
 
     @Transactional

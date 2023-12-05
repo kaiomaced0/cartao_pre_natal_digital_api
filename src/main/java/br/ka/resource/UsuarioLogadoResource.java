@@ -30,7 +30,7 @@ public class UsuarioLogadoResource {
     @GET
     public Response getUsuarioLogado() {
         try {
-            return Response.ok(new UsuarioResponseDTO(repository.findByIdModificado(jsonWebToken.getSubject()))).build();
+            return Response.ok(new UsuarioResponseDTO(repository.findByCpf(jsonWebToken.getSubject()))).build();
         }catch (Exception e){
             return Response.status(Response.Status.NO_CONTENT).build();
         }

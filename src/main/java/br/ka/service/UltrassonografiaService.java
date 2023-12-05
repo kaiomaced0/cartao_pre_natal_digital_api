@@ -1,10 +1,14 @@
 package br.ka.service;
 
+import br.ka.dto.UltrassonografiaDTO;
+import br.ka.model.Mamae;
 import br.ka.model.Ultrassonografia;
+import br.ka.repository.MamaeRepository;
 import br.ka.repository.UltrassonografiaRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.ws.rs.core.Response;
 
 import java.util.List;
 
@@ -13,6 +17,9 @@ public class UltrassonografiaService{
 
     @Inject
     UltrassonografiaRepository repository;
+
+    @Inject
+    MamaeRepository mamaeRepository;
 
     public List<Ultrassonografia> findAll() {
         return repository.listAll();
@@ -23,10 +30,21 @@ public class UltrassonografiaService{
                 .findById(id);
     }
     @Transactional
-    public Ultrassonografia create(Ultrassonografia entity) {
-        Ultrassonografia t = entity;
-        repository.persist(t);
-        return entity;
+    public Response create(UltrassonografiaDTO entity, Long idMamae) {
+        try {
+            Ultrassonografia t = new Ultrassonografia();
+            Mamae mamae = mamaeRepository.findById(idMamae);
+            t.setIdadeGestacional(mamae.getGestacao().getIdadeGestacional());
+            t.setObservacao(entity.observacao());
+            t.setLinkArquivo(entity.linkArquivo());
+            repository.persist(t);
+            mamae.getUltrassonografias().add(t);
+            return Response.ok().build();
+        }catch (Exception e){
+            return Response.noContent().build();
+        }
+
+
     }
 
     @Transactional

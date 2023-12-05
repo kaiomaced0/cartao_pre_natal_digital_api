@@ -1,11 +1,13 @@
 package br.ka.resource;
 
+import br.ka.dto.UltrassonografiaDTO;
 import br.ka.model.EntityClass;
 import br.ka.model.Ultrassonografia;
 import br.ka.service.UltrassonografiaService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,8 +31,9 @@ public class UltrassonografiaResource {
     }
 
     @POST
-    public Ultrassonografia create(Ultrassonografia entity) {
-        return service.create(entity);
+    @Path("/{id}")
+    public Response create(UltrassonografiaDTO entity, @PathParam("id") Long id) {
+        return service.create(entity, id);
     }
 
     @PUT

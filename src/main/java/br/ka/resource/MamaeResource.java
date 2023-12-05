@@ -44,6 +44,20 @@ public class MamaeResource {
         return service.getConsultas();
 
     }
+
+    @GET
+    @Path("/ultrassonografias")
+    public Response getUltrassonografias() {
+        return service.getUltrassonografias();
+
+    }
+
+    @GET
+    @Path("/vacinas")
+    public Response getVacinas() {
+        return service.getVacinas();
+
+    }
     @GET
     @Path("/exames")
     public Response getExames() {
@@ -65,8 +79,15 @@ public class MamaeResource {
 
     }
 
+    @GET
+    @Path("/observacao")
+    public List<ObservacaoResponseDTO> getObservacoes() {
+        return service.getObservacoes();
+
+    }
+
     @POST
-    public Response create(UsuarioDTO usuarioDTO) {
+    public Response create(MamaeDTO usuarioDTO) {
 
         return service.insert(usuarioDTO);
     }

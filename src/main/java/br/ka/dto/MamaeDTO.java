@@ -3,17 +3,17 @@ package br.ka.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-import java.util.List;
+import java.time.LocalDate;
 
-public record MedicoDTO(
+public record MamaeDTO(
+
         String cpf,
         String nome,
-        String telefone,
         String email,
         @NotBlank
         @Size(min = 3, max = 1000)
         String senha,
-        String crm
-
+        LocalDate dataInicioGestacao
 ) {
+
 }

@@ -1,6 +1,7 @@
 package br.ka.service;
 
 import br.ka.dto.ExameDTO;
+import br.ka.dto.ExameResponseDTO;
 import br.ka.model.Exame;
 import br.ka.model.Mamae;
 import br.ka.repository.ExameRepository;
@@ -21,12 +22,13 @@ public class ExameService{
     @Inject
     MamaeRepository mamaeRepository;
 
+    @Transactional
     public Response insert(ExameDTO exameDTO){
         Exame e = ExameDTO.criaExame(exameDTO);
         repository.persist(e);
         Mamae m = mamaeRepository.findById(exameDTO.idMamae());
         m.getExames().add(e);
-        return Response.status(Response.Status.OK).build();
+        return Response.status(Response.Status.OK).entity(new ExameResponseDTO(e)).build();
     }
 
     public List<Exame> findAll() {

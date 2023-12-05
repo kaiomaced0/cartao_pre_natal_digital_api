@@ -42,15 +42,7 @@ public class Mamae extends Usuario {
     @JoinColumn(name = "medico_medico")
     private Medico medico;
 
-    private String observacoes;
 
-    public String getObservacoes() {
-        return observacoes;
-    }
-
-    public void setObservacoes(String observacoes) {
-        this.observacoes = observacoes;
-    }
 
     public List<Gestacao> getGestacoes() {
         return gestacoes;

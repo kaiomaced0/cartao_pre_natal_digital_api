@@ -38,22 +38,25 @@ public class MamaeService{
     JsonWebToken jsonWebToken;
 
     @Inject
+    ObservacaoRepository observacaoRepository;
+
+    @Inject
     NutricaoRepository nutricaoRepository;
 
     public Response getUsuarioLogado() {
         try {
-            Mamae m = repository.findByIdModificado(jsonWebToken.getSubject());
-            return Response.ok(new MamaeResponseDTO(m)).build();
+            Mamae m = repository.findById(usuarioRepository.findByCpf(jsonWebToken.getSubject()).getId());
+            MamaeResponseDTO mamaeResponseDTO = new MamaeResponseDTO(m);
+            return Response.ok(mamaeResponseDTO).build();
         }catch (Exception e){
-            return Response.status(Response.Status.NO_CONTENT).build();
+                return Response.status(Response.Status.NO_CONTENT).build();
         }
-
     }
 
     public Response getNutricao(){
         try {
             List<Nutricao> nutricoes = new ArrayList<>();
-            Mamae m = repository.findByIdModificado(jsonWebToken.getSubject());
+            Mamae m = repository.findById(usuarioRepository.findByCpf(jsonWebToken.getSubject()).getId());
             nutricoes = nutricaoRepository.findAll().stream().filter(nutricao -> !nutricao.getEspecifico() || nutricao.getEspecifico() && nutricao.getMamae().getId() == m.getId()).collect(Collectors.toList());
             return Response.ok(nutricoes.stream().map(NutricaoResponseDTO::new).collect(Collectors.toList())).build();
         }catch (Exception e){
@@ -64,7 +67,7 @@ public class MamaeService{
     public Response getConsultas() {
         try {
 
-            return Response.ok(repository.findByIdModificado(jsonWebToken.getSubject()).getConsultas().stream().map(ConsultaResponseDTO::new).collect(Collectors.toList())).build();
+            return Response.ok(repository.findByIdModificado(usuarioRepository.findByCpf(jsonWebToken.getSubject()).getId().toString()).getConsultas().stream().map(ConsultaResponseDTO::new).collect(Collectors.toList())).build();
         }catch (Exception e){
             return Response.status(Response.Status.NO_CONTENT).build();
         }
@@ -74,7 +77,27 @@ public class MamaeService{
     public Response getExames() {
         try {
 
-            return Response.ok(repository.findByIdModificado(jsonWebToken.getSubject()).getExames().stream().map(ExameResponseDTO::new).collect(Collectors.toList())).build();
+            return Response.ok(repository.findByIdModificado(usuarioRepository.findByCpf(jsonWebToken.getSubject()).getId().toString()).getExames().stream().map(ExameResponseDTO::new).collect(Collectors.toList())).build();
+        }catch (Exception e){
+            return Response.status(Response.Status.NO_CONTENT).build();
+        }
+
+    }
+
+    public Response getUltrassonografias() {
+        try {
+
+            return Response.ok(repository.findByIdModificado(usuarioRepository.findByCpf(jsonWebToken.getSubject()).getId().toString()).getUltrassonografias().stream().map(UltrassonografiaResponseDTO::new).collect(Collectors.toList())).build();
+        }catch (Exception e){
+            return Response.status(Response.Status.NO_CONTENT).build();
+        }
+
+    }
+
+    public Response getVacinas() {
+        try {
+
+            return Response.ok(repository.findByIdModificado(usuarioRepository.findByCpf(jsonWebToken.getSubject()).getId().toString()).getVacinas().stream().map(VacinaResponseDTO::new).collect(Collectors.toList())).build();
         }catch (Exception e){
             return Response.status(Response.Status.NO_CONTENT).build();
         }
@@ -84,19 +107,19 @@ public class MamaeService{
     public Response getMedico(){
         try {
 
-            return Response.ok(new MedicoResponseDTO(repository.findByIdModificado(jsonWebToken.getSubject()).getMedico())).build();
+            return Response.ok(new MedicoResponseDTO(repository.findByIdModificado(usuarioRepository.findByCpf(jsonWebToken.getSubject()).getId().toString()).getMedico())).build();
         }catch (Exception e){
             return Response.status(Response.Status.NO_CONTENT).build();
         }
     }
     @Transactional
     public Response insertVacina(VacinaDTO vacinaDTO){
-        Mamae m = repository.findByIdModificado(jsonWebToken.getSubject());
+        Mamae m = repository.findByIdModificado(usuarioRepository.findByCpf(jsonWebToken.getSubject()).getId().toString());
         return vacinaService.insert(m.getId(),vacinaDTO);
     }
 
     @Transactional
-    public Response insert(UsuarioDTO usuarioDTO){
+    public Response insert(MamaeDTO usuarioDTO){
 
         Mamae mamae = new Mamae();
         mamae.setNome(usuarioDTO.nome());
@@ -109,6 +132,7 @@ public class MamaeService{
         repository.persist(mamae);
         mamae.setEmGestacao(true);
         Gestacao gestacao = new Gestacao();
+        gestacao.setDataInicio(usuarioDTO.dataInicioGestacao());
         gestacaoRepository.persist(gestacao);
         mamae.setGestacao(gestacao);
 
@@ -131,14 +155,14 @@ public class MamaeService{
 
     @Transactional
     public Response setConvenio(String convenio){
-        Usuario u = usuarioRepository.findByIdModificado(jsonWebToken.getSubject());
+        Usuario u = usuarioRepository.findByCpf(jsonWebToken.getSubject());
         repository.findById(u.getId()).setConvenio(convenio);
         return Response.status(Response.Status.OK).build();
     }
 
     @Transactional
     public Response mudarDadosMamae(MudarDadosMamaeDTO mudarDadosMamaeDTO){
-        Usuario u = usuarioRepository.findByIdModificado(jsonWebToken.getSubject());
+        Usuario u = usuarioRepository.findByCpf(jsonWebToken.getSubject());
         repository.findById(u.getId()).getGestacao().setNomeBebe(mudarDadosMamaeDTO.nomeBebe());
         repository.findById(u.getId()).setContatoEmergencia(mudarDadosMamaeDTO.contatoEmergencia());
         return Response.status(Response.Status.OK).build();
@@ -146,9 +170,20 @@ public class MamaeService{
 
     @Transactional
     public Response setObservacao(MamaeObservacaoDTO nome){
-        Usuario u = usuarioRepository.findByIdModificado(jsonWebToken.getSubject());
-        repository.findById(u.getId()).setObservacoes(nome.observacao());
+        Usuario u = usuarioRepository.findByCpf(jsonWebToken.getSubject());
+        Observacao o = new Observacao();
+        o.setObservacao(nome.observacao());
+        o.setAtendido(false);
+        observacaoRepository.persist(o);
+        u.getDuvidas().add(o);
         return Response.status(Response.Status.OK).build();
+    }
+
+    public List<ObservacaoResponseDTO> getObservacoes() {
+        List<ObservacaoResponseDTO> observacoes = new ArrayList<>();
+        observacoes = usuarioRepository.findByCpf(jsonWebToken.getSubject()).getDuvidas().stream().map(ObservacaoResponseDTO::new).collect(Collectors.toList());
+        return observacoes;
+
     }
 
     public List<Mamae> findAll() {

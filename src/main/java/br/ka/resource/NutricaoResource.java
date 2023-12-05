@@ -1,5 +1,8 @@
 package br.ka.resource;
 
+import br.ka.dto.NutricaoDTO;
+import br.ka.dto.NutricaoMamaeDTO;
+import br.ka.dto.NutricaoResponseDTO;
 import br.ka.model.EntityClass;
 import br.ka.model.Nutricao;
 import br.ka.service.NutricaoService;
@@ -29,9 +32,16 @@ public class NutricaoResource {
     }
 
     @POST
-    public Nutricao create(Nutricao entity) {
+    public NutricaoResponseDTO create(NutricaoDTO entity) {
         return service.create(entity);
     }
+
+    @POST
+    @Path("/mamae")
+    public NutricaoResponseDTO create(NutricaoMamaeDTO entity) {
+        return service.createMamae(entity);
+    }
+
 
     @PUT
     @Path("/{id}")

@@ -1,6 +1,10 @@
 package br.ka.service;
 
+import br.ka.dto.NutricaoDTO;
+import br.ka.dto.NutricaoMamaeDTO;
+import br.ka.dto.NutricaoResponseDTO;
 import br.ka.model.Nutricao;
+import br.ka.repository.MamaeRepository;
 import br.ka.repository.NutricaoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -13,6 +17,9 @@ public class NutricaoService{
     @Inject
     NutricaoRepository repository;
 
+    @Inject
+    MamaeRepository mamaeRepository;
+
     public List<Nutricao> findAll() {
         return repository.listAll();
     }
@@ -22,10 +29,23 @@ public class NutricaoService{
                 .findById(id);
     }
     @Transactional
-    public Nutricao create(Nutricao entity) {
-        Nutricao t = entity;
+    public NutricaoResponseDTO createMamae(NutricaoMamaeDTO entity) {
+        Nutricao t = new Nutricao();
+        t.setTitulo(entity.titulo());
+        t.setEspecifico(true);
+        t.setMamae(mamaeRepository.findById(entity.idMamae()));
+        t.setDescricao(entity.descricao());
         repository.persist(t);
-        return entity;
+        return new NutricaoResponseDTO(t);
+    }
+
+    @Transactional
+    public NutricaoResponseDTO create(NutricaoDTO entity) {
+        Nutricao t = new Nutricao();
+        t.setTitulo(entity.titulo());
+        t.setDescricao(entity.descricao());
+        repository.persist(t);
+        return new NutricaoResponseDTO(t);
     }
 
     @Transactional

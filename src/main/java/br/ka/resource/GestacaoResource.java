@@ -2,6 +2,7 @@ package br.ka.resource;
 
 import br.ka.dto.GestacaoDTO;
 import br.ka.dto.GestacaoResponseDTO;
+import br.ka.dto.GestacaoUpdateDTO;
 import br.ka.model.EntityClass;
 import br.ka.model.Gestacao;
 import br.ka.service.GestacaoService;
@@ -37,8 +38,8 @@ public class GestacaoResource {
 
     @PUT
     @Path("/{id}")
-    public Gestacao update(@PathParam("id") Long id, Gestacao entity) {
-        return service.update(entity);
+    public GestacaoResponseDTO update(@PathParam("id") Long id, GestacaoUpdateDTO entity) {
+        return service.update(id, entity);
     }
 
     @PATCH

@@ -10,9 +10,9 @@ public class Vacina extends EntityClass {
 
     private String nome;
 
-    private Double quantidadeDoses;
+    private Integer quantidadeDoses;
 
-    private Double doseAtual;
+    private Integer doseAtual;
 
     private String nomeProfissionalRealizouVacina;
 
@@ -39,19 +39,19 @@ public class Vacina extends EntityClass {
         this.nome = nome;
     }
 
-    public Double getQuantidadeDoses() {
+    public Integer getQuantidadeDoses() {
         return quantidadeDoses;
     }
 
-    public void setQuantidadeDoses(Double quantidadeDoses) {
+    public void setQuantidadeDoses(Integer quantidadeDoses) {
         this.quantidadeDoses = quantidadeDoses;
     }
 
-    public Double getDoseAtual() {
+    public Integer getDoseAtual() {
         return doseAtual;
     }
 
-    public void setDoseAtual(Double doseAtual) {
+    public void setDoseAtual(Integer doseAtual) {
         this.doseAtual = doseAtual;
     }
 
