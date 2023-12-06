@@ -1,6 +1,7 @@
 package br.ka.resource;
 
 import br.ka.dto.UltrassonografiaDTO;
+import br.ka.dto.UltrassonografiaResponseDTO;
 import br.ka.model.EntityClass;
 import br.ka.model.Ultrassonografia;
 import br.ka.service.UltrassonografiaService;
@@ -19,14 +20,13 @@ public class UltrassonografiaResource {
     @Inject
     private UltrassonografiaService service;
 
-
     @GET
-    public List<Ultrassonografia> getAll(){
-        return service.findAll().stream().filter(EntityClass::getAtivo).collect(Collectors.toList());
+    public List<UltrassonografiaResponseDTO> getAll(){
+        return service.findAll();
     }
     @GET
     @Path("/{id}")
-    public Ultrassonografia getById(@PathParam("id") Long id) {
+    public UltrassonografiaResponseDTO getById(@PathParam("id") Long id) {
         return service.findById(id);
     }
 
@@ -38,13 +38,13 @@ public class UltrassonografiaResource {
 
     @PUT
     @Path("/{id}")
-    public Ultrassonografia update(@PathParam("id") Long id, Ultrassonografia entity) {
-        return service.update(entity);
+    public UltrassonografiaResponseDTO update(@PathParam("id") Long id, UltrassonografiaDTO entity) {
+        return service.update(entity, id);
     }
 
     @PATCH
     @Path("/delete/{id}")
     public void delete(@PathParam("id") Long id) {
-        service.findById(id).setAtivo(false);
+        service.findById(id);
     }
 }

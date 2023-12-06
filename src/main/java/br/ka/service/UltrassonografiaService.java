@@ -1,6 +1,7 @@
 package br.ka.service;
 
 import br.ka.dto.UltrassonografiaDTO;
+import br.ka.dto.UltrassonografiaResponseDTO;
 import br.ka.model.Mamae;
 import br.ka.model.Ultrassonografia;
 import br.ka.repository.MamaeRepository;
@@ -11,6 +12,7 @@ import jakarta.transaction.Transactional;
 import jakarta.ws.rs.core.Response;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class UltrassonografiaService{
@@ -21,25 +23,33 @@ public class UltrassonografiaService{
     @Inject
     MamaeRepository mamaeRepository;
 
-    public List<Ultrassonografia> findAll() {
-        return repository.listAll();
+    public List<UltrassonografiaResponseDTO> findAll() {
+        return repository.listAll().stream().map(UltrassonografiaResponseDTO::new).collect(Collectors.toList());
     }
 
-    public Ultrassonografia findById(Long id) {
-        return repository
-                .findById(id);
+    public UltrassonografiaResponseDTO findById(Long id) {
+        return new UltrassonografiaResponseDTO(repository
+                .findById(id));
     }
     @Transactional
     public Response create(UltrassonografiaDTO entity, Long idMamae) {
         try {
             Ultrassonografia t = new Ultrassonografia();
             Mamae mamae = mamaeRepository.findById(idMamae);
-            t.setIdadeGestacional(mamae.getGestacao().getIdadeGestacional());
+            if(entity.idadeGestacional() == null){
+                t.setIdadeGestacional(mamae.getGestacao().getIdadeGestacional());
+            }else{
+                t.setIdadeGestacional(entity.idadeGestacional());
+            }
             t.setObservacao(entity.observacao());
             t.setLinkArquivo(entity.linkArquivo());
+            t.setLiq(entity.liq());
+            t.setIgdum(entity.igdum());
+            t.setDoppler(entity.doppler());
+            t.setPlacenta(entity.placenta());
             repository.persist(t);
             mamae.getUltrassonografias().add(t);
-            return Response.ok().build();
+            return Response.ok(new UltrassonografiaResponseDTO(t)).build();
         }catch (Exception e){
             return Response.noContent().build();
         }
@@ -48,8 +58,17 @@ public class UltrassonografiaService{
     }
 
     @Transactional
-    public Ultrassonografia update(Ultrassonografia entity) {
-        return repository.getEntityManager().merge(entity);
+    public UltrassonografiaResponseDTO update(UltrassonografiaDTO entity, Long id) {
+        Ultrassonografia u = repository.findById(id);
+        u.setLiq(entity.liq());
+        u.setIgdum(entity.igdum());
+        u.setPlacenta(entity.placenta());
+        u.setObservacao(entity.observacao());
+        u.setLinkArquivo(entity.linkArquivo());
+        u.setDoppler(entity.doppler());
+        u.setIdadeGestacional(u.getIdadeGestacional());
+
+        return new UltrassonografiaResponseDTO(u);
     }
 
     @Transactional
