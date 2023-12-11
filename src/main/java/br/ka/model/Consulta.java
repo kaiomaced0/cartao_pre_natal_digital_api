@@ -18,9 +18,29 @@ public class Consulta extends EntityClass {
 
     private String titulo;
 
+    private String edema;
+
     private LocalDate dataRealizada;
 
     private Long peso;
+
+    private String mf;
+
+    public String getMf() {
+        return mf;
+    }
+
+    public void setMf(String mf) {
+        this.mf = mf;
+    }
+
+    public String getEdema() {
+        return edema;
+    }
+
+    public void setEdema(String edema) {
+        this.edema = edema;
+    }
 
     public Long getPeso() {
         return peso;
