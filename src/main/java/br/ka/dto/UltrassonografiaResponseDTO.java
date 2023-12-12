@@ -19,6 +19,6 @@ public record UltrassonografiaResponseDTO(
 ) {
     public UltrassonografiaResponseDTO(Ultrassonografia u){
 
-        this(u.getId(), u.getObservacao(), u.getLinkArquivo(), u.getIdadeGestacional(), u.getLiq(), u.getDoppler(), u.getPlacenta(), u.getIgdum(), u.getData().format(DateTimeFormatter.ofPattern("dd / MM / yyyy")));
+        this(u.getId(), u.getObservacao(), u.getLinkArquivo(), u.getIdadeGestacional(), u.getLiq(), u.getDoppler(), u.getPlacenta(), u.getIgdum(), u.getData().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
     }
 }

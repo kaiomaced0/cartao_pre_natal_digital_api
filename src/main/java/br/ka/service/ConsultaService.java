@@ -53,6 +53,8 @@ public class ConsultaService{
             t.setTitulo(entity.titulo());
             t.setPeso(entity.peso());
             t.setDataRealizada(LocalDate.now());
+            t.setEdema(entity.edema());
+            t.setMf(entity.mf());
             Mamae m = mamaeRepository.findById(idMamae);
             m.getGestacao().setIdadeGestacional(ChronoUnit.WEEKS.between(m.getGestacao().getDataInicio(), LocalDate.now()) + " semanas ");
             t.setIdadeGestacional(m.getGestacao().getIdadeGestacional());
